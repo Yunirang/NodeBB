@@ -3,14 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticatedRoutes = void 0;
-const express_1 = require("express");
+const express_1 = __importDefault(require("express"));
 const middleware_1 = __importDefault(require("../../middleware"));
 const controllers_1 = __importDefault(require("../../controllers"));
 const helpers_1 = __importDefault(require("../helpers"));
 const { setupApiRoute } = helpers_1.default;
-const router = (0, express_1.Router)();
-// function guestRoutes(): void {
+const router = express_1.default.Router();
+// eslint-disable-next-line no-unused-vars
+// function guestRoutes() {
 //     // like registration, login...
 // }
 function authenticatedRoutes() {
@@ -46,7 +46,6 @@ function authenticatedRoutes() {
     // Shorthand route to access user routes by userslug
     router.all('/+bySlug/:userslug*?', [], controllers_1.default.write.users.redirectBySlug);
 }
-exports.authenticatedRoutes = authenticatedRoutes;
 function default_1() {
     authenticatedRoutes();
     return router;

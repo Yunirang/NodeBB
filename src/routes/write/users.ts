@@ -1,18 +1,18 @@
-
-import { Router, RequestHandler } from 'express';
+import express, { Router } from 'express';
 import middleware from '../../middleware';
 import controllers from '../../controllers';
 import routeHelpers from '../helpers';
 
 const { setupApiRoute } = routeHelpers;
-const router = Router();
+const router: Router = express.Router();
 
-// function guestRoutes(): void {
+// eslint-disable-next-line no-unused-vars
+// function guestRoutes() {
 //     // like registration, login...
 // }
 
-export function authenticatedRoutes(): void {
-    const middlewares: RequestHandler[] = [middleware.ensureLoggedIn];
+function authenticatedRoutes(): void {
+    const middlewares = [middleware.ensureLoggedIn];
 
     setupApiRoute(router, 'post', '/', [...middlewares, middleware.checkRequired.bind(null, ['username'])], controllers.write.users.create);
     setupApiRoute(router, 'delete', '/', [...middlewares, middleware.checkRequired.bind(null, ['uids'])], controllers.write.users.deleteMany);
@@ -57,7 +57,6 @@ export function authenticatedRoutes(): void {
     // Shorthand route to access user routes by userslug
     router.all('/+bySlug/:userslug*?', [], controllers.write.users.redirectBySlug);
 }
-
 
 export default function (): Router {
     authenticatedRoutes();

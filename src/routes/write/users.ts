@@ -1,5 +1,4 @@
 
-
 import { Router, RequestHandler } from 'express';
 import middleware from '../../middleware';
 import controllers from '../../controllers';
@@ -12,7 +11,7 @@ const router = Router();
 //     // like registration, login...
 // }
 
-function authenticatedRoutes(): void {
+export function authenticatedRoutes(): void {
     const middlewares: RequestHandler[] = [middleware.ensureLoggedIn];
 
     setupApiRoute(router, 'post', '/', [...middlewares, middleware.checkRequired.bind(null, ['username'])], controllers.write.users.create);
@@ -58,7 +57,6 @@ function authenticatedRoutes(): void {
     // Shorthand route to access user routes by userslug
     router.all('/+bySlug/:userslug*?', [], controllers.write.users.redirectBySlug);
 }
-
 
 
 export default function (): Router {
